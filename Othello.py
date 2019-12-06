@@ -30,27 +30,20 @@ print()
 print("For questions, comments, or edits, please email me at namozeg@gmail.com".center(width))
 
 def ask_hints():
-    hint_tracker = 0
     global hints
-    while hint_tracker == 0:
+    while True:
         print()
         hints = input("Would you like to enable hints for this game? Please enter Y or N. ")
-        if len(hints) != 1:
-            print()
-            print("Please enter Y or N.")
-        elif hints == "Y" or hints =="y":
-            print()
-            print("Hints enabled. Available moves will be marked with a '#'.")
-            hint_tracker  = 1
+        if hints == "Y" or hints == "y":
             hints = 1
+            break
         elif hints == "N" or hints == "n":
-            print()
-            print("Hints disabled. Available moves will not be marked.")
-            hint_tracker  = 1
             hints = 0
+            break
         else:
             print()
             print("Please enter Y or N.")
+            continue
 
 def print_board(board):
     header = " "
@@ -242,15 +235,14 @@ def available_moves(opp_player,player):
         for j in range(8):
             if board[i][j] == "#":
                 possible_moves += 1
+    #print("There are " + str(possible_moves) + " possible moves")
+    return possible_moves
 
 def any_possible_moves():
-    global turn
     clear_past_available_moves(board)
-    available_moves("X","O")
-    store1 = possible_moves
+    store1 = available_moves("X","O")
     clear_past_available_moves(board)
-    available_moves("O","X")
-    store2 = possible_moves
+    store2 = available_moves("O","X")
     if store1 + store2 == 0:
         return 0
 
