@@ -1,3 +1,5 @@
+#!/bin/python3
+
 board = []
 turn = 1
 
@@ -51,10 +53,11 @@ def ask_hints():
             print("Please enter Y or N.")
 
 def print_board(board):
-    column_header = [" "]
-    for i in range(8):
-        column_header.append(str(i + 1))
-    print((" ".join(column_header)).center(width))
+    header = " "
+    for i in range(1,9):
+        header += " " + str(i)
+    print(header.center(width)) 
+
     for i in range(1,9):
         print((str(i) + " " + " ".join(board[i - 1])).center(width))
 
