@@ -33,12 +33,12 @@ def ask_hints():
     global hints
     while True:
         print()
-        hints = input("Would you like to enable hints for this game? Please enter Y or N. ")
-        if hints == "Y" or hints == "y":
-            hints = 1
+        user_input = input("Would you like to enable hints for this game? Please enter Y or N. ")
+        if user_input == "Y" or user_input == "y":
+            hints = True
             break
-        elif hints == "N" or hints == "n":
-            hints = 0
+        elif user_input == "N" or user_input == "n":
+            hints = False
             break
         else:
             print()
@@ -510,11 +510,11 @@ def move(player):
     else:
         opp_player = "X"
     clear_past_available_moves(board)
-    if hints == 1:
+    if hints:
         available_moves(opp_player,player)
         print()
         print_board(board)
-    if hints == 0:
+    else:
         print()
         print_board(board)
         available_moves(opp_player,player)
