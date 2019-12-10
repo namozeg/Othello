@@ -1,4 +1,7 @@
 #!/bin/python3
+import os
+import Graphical
+
 
 board = []
 turn = 1
@@ -10,24 +13,6 @@ board[3][3] = "X"
 board[3][4] = "O"
 board[4][3] = "O"
 board[4][4] = "X"
-
-import os  
-width = os.get_terminal_size().columns - 1
-
-print()
-print("Othello".center(width))
-print("by namozeg".center(width))
-print()
-print("Welcome to Othello, a two-player tile-flipping game! Take turns placing pieces".center(width))
-print("on the board that flank oppponent pieces to capture them and turn them into your".center(width))
-print("own. Pieces can be flanked horizontally, vertically, and even diagonally. Note".center(width))
-print("that you can only place a piece if it captures at least one opponent piece. If you".center(width))
-print("have no available moves, your turn will be skipped. If neither player has an available".center(width))
-print("move, the game is over. Whoever has more tiles at the end of the game is the winner.".center(width))
-
-print("Good luck!".center(width))
-print()
-print("For questions, comments, or edits, please email me at namozeg@gmail.com".center(width))
 
 def ask_hints():
     global hints
@@ -525,17 +510,37 @@ def move(player):
         print()
         print("Player " + player + " has no possible moves.")
     turn += 1
-           
-while turn > 0:
-    if any_possible_moves() == 0:
-        print()
-        print_board(board)
-        print()
-        print("No moves left!")
-        check_board(board)
-    if turn == 1:
-        ask_hints()
-    if turn % 2 != 0:
-        move("X")
-    else:
-        move("O")
+
+#Program Driver
+if __name__ == "__main__":
+     
+    width = os.get_terminal_size().columns - 1
+
+    print()
+    print("Othello".center(width))
+    print("by namozeg".center(width))
+    print()
+    print("Welcome to Othello, a two-player tile-flipping game! Take turns placing pieces".center(width))
+    print("on the board that flank oppponent pieces to capture them and turn them into your".center(width))
+    print("own. Pieces can be flanked horizontally, vertically, and even diagonally. Note".center(width))
+    print("that you can only place a piece if it captures at least one opponent piece. If you".center(width))
+    print("have no available moves, your turn will be skipped. If neither player has an available".center(width))
+    print("move, the game is over. Whoever has more tiles at the end of the game is the winner.".center(width))
+
+    print("Good luck!".center(width))
+    print()
+    print("For questions, comments, or edits, please email me at namozeg@gmail.com".center(width))
+
+    while turn > 0:
+        if any_possible_moves() == 0:
+            print()
+            print_board(board)
+            print()
+            print("No moves left!")
+            check_board(board)
+        if turn == 1:
+            ask_hints()
+        if turn % 2 != 0:
+            move("X")
+        else:
+            move("O")           
