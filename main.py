@@ -6,6 +6,7 @@ import Game
 
 
 def update_board_graphic():
+    display.fill(green)
     for row in range(8):
         for column in range(8):
             if game.board[row][column] == "O":
@@ -14,6 +15,33 @@ def update_board_graphic():
                 pygame.draw.rect(display, red, (column*32, row*32, 32, 32))
             elif game.board[row][column] == "X":
                 pygame.draw.rect(display, black, (column*32, row*32, 32, 32))
+
+def move(game, player, graphical):
+    if player == "X":
+        opp_player = "O"
+    else:
+        opp_player = "X"
+    game.clear_past_available_moves()
+    if game.hints:
+        game.available_moves(opp_player, player)
+        print()
+        game.print_board()
+        if graphical: update_board_graphic()
+        if graphical: pygame.display.flip()
+    else:
+        print()
+        game.print_board()
+        if graphical: update_board_graphic()
+        if graphical: pygame.display.flip()
+        game.available_moves(opp_player, player)
+    if game.possible_moves != 0:
+        game.place_piece(player)
+        game.change_pieces(opp_player, player)
+    else:
+        print()
+        print("Player " + player + " has no possible moves.")
+    game.turn += 1
+
 
 def print_welcome_message():
     width = os.get_terminal_size().columns - 1
@@ -45,6 +73,7 @@ if __name__ == "__main__":
         print("Error: Unrecognized option.")
         sys.exit()
     elif len(sys.argv) == 2 and sys.argv[1] == "-c":
+        B
         graphical_mode = False
 
     #Create the Game object using the Game constructor / __init__ method.
@@ -70,21 +99,25 @@ if __name__ == "__main__":
     
     #print the welcome message to the screen.
     print_welcome_message()
+    if graphical_mode: 
+        update_board_graphic()
+        pygame.display.flip()
 
     while game.turn > 0:
-        if graphical_mode: update_board_graphic()
-        if graphical_mode: pygame.display.flip()
         if game.any_possible_moves() == 0:
             print()
             game.print_board()
+            if graphical_mode:
+                update_board_graphic()
+                pygame.display.flip()
             print()
             print("No moves left!")
             game.check_board(game.board)
         if game.turn == 1:
             game.ask_hints()
         if game.turn % 2 != 0:
-            game.move("X")
+            move(game, "X", graphical_mode)
         else:
-            game.move("O")
+            move(game, "O", graphical_mode)
 
     if graphical_mode: pygame.quit()

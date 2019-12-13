@@ -479,25 +479,3 @@ class Game:
                 else:
                     print()
                     print("Please enter Y or N.")
-
-    def move(self, player):
-        if player == "X":
-            opp_player = "O"
-        else:
-            opp_player = "X"
-        self.clear_past_available_moves()
-        if self.hints:
-            self.available_moves(opp_player,player)
-            print()
-            self.print_board()
-        else:
-            print()
-            self.print_board()
-            self.available_moves(opp_player,player)
-        if self.possible_moves != 0:
-            self.place_piece(player)
-            self.change_pieces(opp_player,player)
-        else:
-            print()
-            print("Player " + player + " has no possible moves.")
-        self.turn += 1
