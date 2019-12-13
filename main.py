@@ -1,10 +1,8 @@
 #!/bin/python3
 import os
+import sys
 import contextlib
 import Game
-#this is done to suppress the pygame output when loaded.
-with contextlib.redirect_stdout(None):
-    import pygame
 
 
 def update_board_graphic():
@@ -17,27 +15,7 @@ def update_board_graphic():
             elif game.board[row][column] == "X":
                 pygame.draw.rect(display, black, (column*32, row*32, 32, 32))
 
-#Program Driver
-if __name__ == "__main__":
-    
-    #Create the Game object using the Game constructor / __init__ method.
-    game = Game.Game()
-
-    #initialize pygame
-    pygame.init()
-
-    #tile colors
-    white = (255, 255, 255)
-    black = (0, 0, 0)
-    green = (0, 255, 0)
-    red = (255, 0, 0)
-
-    #create specifications for the display window
-    window_dimensions = (256, 256)
-    display = pygame.display.set_mode((window_dimensions))
-    display.fill(green)
-    pygame.display.set_caption("Othello")
-
+def print_welcome_message():
     width = os.get_terminal_size().columns - 1
 
     print()
@@ -54,9 +32,48 @@ if __name__ == "__main__":
     print()
     print("For questions, comments, or edits, please email me at namozeg@gmail.com".center(width))
 
+#Program Driver
+if __name__ == "__main__":
+
+    graphical_mode = True
+    
+    #determine whether or not the game will be graphical.
+    if len(sys.argv) > 2:
+        print("Error: too many arguments!")
+        sys.exit()
+    elif len(sys.argv) == 2 and sys.argv[1] != "-c":
+        print("Error: Unrecognized option.")
+        sys.exit()
+    elif len(sys.argv) == 2 and sys.argv[1] == "-c":
+        graphical_mode = False
+
+    #Create the Game object using the Game constructor / __init__ method.
+    game = Game.Game()
+    
+    #if the graphical option was chosen then start pygame
+    if graphical_mode:
+        with contextlib.redirect_stdout(None):
+            import pygame
+        pygame.init()
+
+        #tile colors
+        white = (255, 255, 255)
+        black = (0, 0, 0)
+        green = (0, 255, 0)
+        red = (255, 0, 0)
+
+        #create specifications for the display window
+        window_dimensions = (256, 256)
+        display = pygame.display.set_mode((window_dimensions))
+        display.fill(green)
+        pygame.display.set_caption("Othello")
+    
+    #print the welcome message to the screen.
+    print_welcome_message()
+
     while game.turn > 0:
-        update_board_graphic()
-        pygame.display.flip()
+        if graphical_mode: update_board_graphic()
+        if graphical_mode: pygame.display.flip()
         if game.any_possible_moves() == 0:
             print()
             game.print_board()
@@ -70,4 +87,4 @@ if __name__ == "__main__":
         else:
             game.move("O")
 
-    pygame.quit()
+    if graphical_mode: pygame.quit()
