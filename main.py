@@ -73,7 +73,6 @@ if __name__ == "__main__":
         print("Error: Unrecognized option.")
         sys.exit()
     elif len(sys.argv) == 2 and sys.argv[1] == "-c":
-        B
         graphical_mode = False
 
     #Create the Game object using the Game constructor / __init__ method.
