@@ -1,6 +1,4 @@
-#!/bin/python3
 import os
-import Graphical
 
 
 board = []
@@ -12,8 +10,7 @@ for i in range(8):
 board[3][3] = "X"
 board[3][4] = "O"
 board[4][3] = "O"
-board[4][4] = "X"
-
+board[4][4] = "X" 
 def ask_hints():
     global hints
     while True:
@@ -526,7 +523,6 @@ if __name__ == "__main__":
     print("that you can only place a piece if it captures at least one opponent piece. If you".center(width))
     print("have no available moves, your turn will be skipped. If neither player has an available".center(width))
     print("move, the game is over. Whoever has more tiles at the end of the game is the winner.".center(width))
-
     print("Good luck!".center(width))
     print()
     print("For questions, comments, or edits, please email me at namozeg@gmail.com".center(width))
@@ -543,4 +539,4 @@ if __name__ == "__main__":
         if turn % 2 != 0:
             move("X")
         else:
-            move("O")           
+            move("O")
